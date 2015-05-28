@@ -28,7 +28,7 @@ import javax.swing.border.TitledBorder;
 
 public class Carton<setBounds> extends JPanel{
 	
-	private int numeroCarton=0;//(int) (Math.random()*19+1);
+	private int numeroCarton=(int) (Math.random()*19+1);
 	private int cont=0;
 	private ArrayList<String> numerosCarton;
 	private String numeros;
@@ -52,6 +52,7 @@ public class Carton<setBounds> extends JPanel{
 		numeros=mu.getNumeros(numeroCarton);
 		System.out.println(numeros);
 		secuenciaNumeros=numeros.split(",");
+		System.out.println(secuenciaNumeros);
 			for (int k=0;k<3;k++){
 				for (int j=0;j<9;j++){
 					cont=cont+1;

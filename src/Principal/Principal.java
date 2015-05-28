@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import juego.Cartones;
 import juego.Player;
-import juego.Players;
+
 
 
 public class Principal extends JFrame {
