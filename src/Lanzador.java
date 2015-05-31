@@ -29,6 +29,7 @@ public class Lanzador {
 			//	JOptionPane.showMessageDialog (null, "Message", "Title", JOptionPane.WARNING_MESSAGE);
 				
 				Primera ventana= new Primera();
+				//Ventana ventana=new Ventana();
 				ventana.setVisible(true);
 				
 				

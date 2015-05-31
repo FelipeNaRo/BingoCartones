@@ -23,15 +23,24 @@ import java.awt.GridBagConstraints;
 import java.awt.Label;
 import java.awt.Insets;
 import java.awt.Color;
+
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.border.TitledBorder;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Carton<setBounds> extends JPanel{
 	
 	private int numeroCarton=(int) (Math.random()*19+1);
 	private int cont=0;
+	private int pos=0;
 	private ArrayList<String> numerosCarton;
+	private String color;
 	private String numeros;
+	private int posicion;
+	
 	private String[] secuenciaNumeros;
 	private JLabel[] dibujoNumerosCarton=new JLabel[28];
 	static final String NUMEROS="SELECT NUMEROS FROM CARTONES WHERE NUM_CARTON =";
@@ -41,23 +50,23 @@ public class Carton<setBounds> extends JPanel{
 	ResultSet conjuntoResultados = null;
 
 	public Carton() {
+		color="amarillo";
 		setNumeroCarton(numeroCarton);
-		System.out.print(numeroCarton);
 		setBorder(new TitledBorder(null, "carton n\u00BA:"+numeroCarton, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setBackground(new Color(236, 233, 216));
 		setBounds(10,10,275,120);
 		setLayout(new MigLayout("", "[25.00px]", "[25.00px]"));
 		
+		
+		
 		mu=new modeloCorredores();
 		numeros=mu.getNumeros(numeroCarton);
-		System.out.println(numeros);
 		secuenciaNumeros=numeros.split(",");
-		System.out.println(secuenciaNumeros);
 			for (int k=0;k<3;k++){
 				for (int j=0;j<9;j++){
 					cont=cont+1;
-					dibujoNumerosCarton[cont]=new JLabel();	
-					dibujoNumerosCarton[cont].setIcon(new ImageIcon((getClass().getResource("/numerosCarton/"+secuenciaNumeros[cont-1]+".png"))));
+					posicion=cont;
+					dibujoNumerosCarton[cont]=new Numero(Integer.parseInt(secuenciaNumeros[cont-1]));	
 					this.add(dibujoNumerosCarton[cont], "cell "+j+" "+k+",alignx center,aligny center");
 				}
 			}
@@ -68,9 +77,12 @@ public class Carton<setBounds> extends JPanel{
 		if (numeroCarton<20){
 			numeroCarton=numeroCarton+1;
 		}else{numeroCarton=1;}	
-		System.out.println(numeroCarton+"\n");
+		
 
 		}
+	
+	
+	
 	}
 
 

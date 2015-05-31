@@ -17,7 +17,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import juego.Cartones;
-import juego.Player;
 
 
 
@@ -145,7 +144,7 @@ public class Principal extends JFrame {
 		
 		
 		
-		Player jugador[]=new Player[numeroJugadores];
+		
 		for (int i=0;i<numeroJugadores;i++){
 		JPanel panel[] = new JPanel[numeroJugadores];
 		
