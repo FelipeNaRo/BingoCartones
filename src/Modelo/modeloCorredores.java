@@ -14,13 +14,14 @@ public class modeloCorredores {
 	private static String USUARIO_COL="nombre";
 	private static String CARTON_NUM="SELECT NUMEROS FROM CARTONES WHERE NUM_CARTON =";
 	private static String NUM_CARTON_ULTIMO="SELECT NUM_CARTON FROM CARTONES WHERE ULTIMO = 1";
-	
+	private static String ACTUALIZAR_CARTON="UPDATE CARTONES SET ULTIMO=0 WHERE ULTIMO= 1";
+	private static String NUEVO_CARTON_ULTIMO="UPDATE CARTONES SET ULTIMO=1 WHERE NUM_CARTON=";
 	
 	//Conexion
 	private Connection conexion = null;// maneja la conexión
 	Statement instruccion = null;
 	ResultSet conjuntoResultados = null;
-	
+	ResultSet conjuntoResultados2 = null;
 	
 	//usuariosDB
 	private ArrayList<String> usuarios=null;
@@ -75,7 +76,7 @@ public class modeloCorredores {
 			//Listaremos por pantalla los datos
 				if(conjuntoResultados.next())
 				numeros=conjuntoResultados.getString("numeros");
-						return numeros;
+				return numeros;
 		}
 		catch( SQLException excepcionSql ) 
 		{
@@ -86,8 +87,6 @@ public class modeloCorredores {
 			try{
 				conjuntoResultados.close();
 				instruccion.close();
-
-				//conexion.close();
 
 			}
 			catch( SQLException excepcionSql ) 
@@ -100,9 +99,10 @@ public class modeloCorredores {
 	public int getNumeroCarton(){
 		try{ 
 			instruccion = this.conexion.createStatement();
-			conjuntoResultados = instruccion.executeQuery(NUM_CARTON_ULTIMO);
-				if(conjuntoResultados.next())
-				numero=conjuntoResultados.getInt("num_carton");
+			conjuntoResultados2 = instruccion.executeQuery(NUM_CARTON_ULTIMO);
+				if(conjuntoResultados2.next()){
+				numero=conjuntoResultados2.getInt("num_carton");
+				instruccion.executeUpdate(ACTUALIZAR_CARTON);}
 						return numero;
 		}
 		catch( SQLException excepcionSql ) 
@@ -112,7 +112,31 @@ public class modeloCorredores {
 		}
 		finally{
 			try{
-				conjuntoResultados.close();
+				conjuntoResultados2.close();
+				
+				instruccion.close();
+
+			}
+			catch( SQLException excepcionSql ) 
+			{
+				excepcionSql.printStackTrace();
+			}
+		}
+	}
+
+	public void setNumeroCarton(int numero){
+		try{ 
+			instruccion = this.conexion.createStatement();
+			instruccion.executeUpdate(NUEVO_CARTON_ULTIMO+numero);
+		}
+		catch( SQLException excepcionSql ) 
+		{
+			excepcionSql.printStackTrace();
+			
+		}
+		finally{
+			try{
+				
 				instruccion.close();
 
 			}
