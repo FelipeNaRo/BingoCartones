@@ -51,20 +51,8 @@ public class Cartones extends JPanel{
 			Carton c5= new Carton();
 			add(c5, "cell 0 3,alignx left,growy");
 			break;
-		}
+			}
 	
-		/*Carton c= new Carton();
-		add(c, "cell 0 0,alignx left,growy");
-
-		
-		Carton c2= new Carton();
-		add(c2, "cell 0 1,alignx left,growy");*/
-		
-		/*for (int i=1; i==numeroCartones; i++){
-			cartones[i]=new Carton();
-			add(cartones[i],"cell 0 "+(i-1)+",alignx left,growy");
-		}*/
-		
 		}
 	public String getNumerosCarton(int i){
 		return this.numerosCarton[i];
