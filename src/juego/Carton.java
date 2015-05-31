@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Modelo.modeloCorredores;
-
 import java.awt.Color;
 
 import net.miginfocom.swing.MigLayout;
@@ -15,22 +14,18 @@ public class Carton extends JPanel{
 	
 	private int numeroCarton=(int) (Math.random()*19+1);
 	private int cont=0;	
-	private int numero[]=new int[21];
 	private String numeros;
 	private String[] secuenciaNumeros;
 	private JLabel[] dibujoNumerosCarton=new JLabel[28];
 	private modeloCorredores mu;
-	
 	public Carton() {
 		mu=new modeloCorredores();
 		numeroCarton=mu.getNumeroCarton();
-		numero[numeroCarton]=1;
 		setNumeroCarton(numeroCarton);
 		setBorder(new TitledBorder(null, "carton n\u00BA:"+numeroCarton, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setBackground(new Color(236, 233, 216));
 		setBounds(10,10,275,120);
 		setLayout(new MigLayout("", "[25.00px]", "[25.00px]"));
-		
 		
 		numeros=mu.getNumeros(numeroCarton);
 		secuenciaNumeros=numeros.split(",");
@@ -50,9 +45,8 @@ public class Carton extends JPanel{
 			numeroCarton=numeroCarton+1;
 		}else{numeroCarton=1;}	
 		return numeroCarton;
-
 		}
 	
-	}
+}
 
 

@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
+import Modelo.modeloCorredores;
+import juego.Carton;
 import juego.Cartones;
 
 
@@ -27,9 +29,21 @@ public class Principal extends JFrame {
     private JLabel SacaBolas=new JLabel(); 
     private int a=0;
     private int cont=0;
+    private int orden=0;
+    private int testigo=0;
     private int numero[]= new int [91];
     private int numeroCartones=0;
-
+    private int[] numerosCarton=new int[15];
+    private int[] primeraFila=new int[5];
+	private int[] segundaFila=new int[5];
+	private int[] terceraFila=new int[5];
+    private String numeros;
+    private String[] secuenciaNumeros;
+    private String numerosSinCero[]=new String [15];
+    private Carton prueba;
+    private modeloCorredores mu;
+    
+    public Principal(){}
 
 	public Principal(int numeroJugadores, ArrayList nombreJugadores) {
 		setResizable(false);
@@ -55,6 +69,8 @@ public class Principal extends JFrame {
 		marcador[cont].setIcon(new ImageIcon((getClass().getResource("/Principal/imagenes/Botones Rojos/"+cont+".png"))));
 		marcador[cont].setBounds(10+j*60, 10+i*45, 38, 38);
 		pantalla.add(marcador[cont]);
+		
+		numero[cont]=0;
 		SacaBolas=new JLabel();
 		SacaBolas.setBounds(40,450, 100, 100);
 		}}
@@ -82,7 +98,7 @@ public class Principal extends JFrame {
 		});
 		PartidaNueva.setBounds(748, 480, 126, 30);
 		pantalla.add(PartidaNueva);
-		
+		prueba=new Carton();
 		JButton BolaNueva = new JButton("Bola Nueva");
 		BolaNueva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {		
@@ -117,9 +133,14 @@ public class Principal extends JFrame {
 		Linea.setIcon(new ImageIcon(getClass().getResource("/Principal/imagenes/btnLinea.png")));
 		
 		Linea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {						
+			public void actionPerformed(ActionEvent arg0) {	
+				int a=Integer.parseInt(JOptionPane.showInputDialog("numero de cartón: "));
+				prueba=new Carton();
+				if(comprobarLinea(a)==true){
 				JOptionPane.showMessageDialog(null, "Han cantado Linea!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
-			}
+				}else{JOptionPane.showMessageDialog(null, "Linea Incorrecta", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
+}
+				}
 		});	
 		Linea.setBounds(629, 11, 109, 50);
 		pantalla.add(Linea);
@@ -129,7 +150,11 @@ public class Principal extends JFrame {
 		Bingo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {						
 				setBounds(200, 90, 900, 600);
-				JOptionPane.showMessageDialog(null, "Han cantado Bingo!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));	
+				int a=Integer.parseInt(JOptionPane.showInputDialog("numero de cartón: "));
+				if(comprobarBingo(a)==true){
+					JOptionPane.showMessageDialog(null, "Han cantado Bingo!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
+					}else{JOptionPane.showMessageDialog(null, "Bingo Incorrecto", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
+	}
 				setBounds(200, 90, 900, 600);
 			}
 		});	
@@ -155,13 +180,6 @@ public class Principal extends JFrame {
 		panelPestaña.addTab((String)nombreJugadores.get(i), null, panel[i], null);
 		pantalla.add(panelPestaña);
 		}
-	
-		/*;
-		
-		
-		System.out.print("primer paso"+i+numeroJugadores+"\n");
-		
-		}*/
 		
 	}
 	public void reiniciar(){
@@ -185,11 +203,96 @@ public class Principal extends JFrame {
 		SacaBolas.setVisible(false);
 		pantalla.repaint();
 	}
+	
 	public String[] getNombres( ArrayList nombreJugadores){
 		String[] nombres = new String[nombreJugadores.size()];
 		nombres=(String[]) nombreJugadores.toArray();
 		return nombres;
 	} 
+	
+	public boolean comprobarLinea(int carton){
+		orden=0;
+		boolean a=true;
+		mu=new modeloCorredores();
+		numeros=mu.getNumeros(carton);
+		secuenciaNumeros=numeros.split(",");
+		for (int i=0; i<secuenciaNumeros.length; i++){
+			if (Integer.parseInt(secuenciaNumeros[i])!=0){
+				numerosSinCero[orden]=secuenciaNumeros[i];
+				orden=orden+1;
+			}	
+			}
+		
+		for (int j=0;j<numerosSinCero.length;j++){
+			
+				if (j<5){
+				primeraFila[j]=Integer.parseInt(numerosSinCero[(j)]);
+				}else{
+				if (j<10){
+					segundaFila[j-5]=Integer.parseInt(numerosSinCero[(j)]);
+					}else{terceraFila[j-10]=Integer.parseInt(numerosSinCero[(j)]);}
+				}
+		}		
+			for (int k=0;k<primeraFila.length;k++)
+			{
+				if (numero[primeraFila[k]]!=1)
+				{
+					a=false;
+				}
+			}
+			if (a==false)
+			{
+				testigo=0;
+				for (int k=0;k<segundaFila.length;k++)
+				{	
+					if (numero[segundaFila[k]]!=1)
+						{
+						a=false;
+						}else{
+								testigo=testigo+1;
+								}
+				}
+			}
+			   if (testigo==5)
+			   {
+				   a=true;
+			   }else 	{
+				   		testigo=0;
+				   		}
+			if (a==false)
+			{
+				for (int k=0;k<terceraFila.length;k++)
+				{
+					if (numero[terceraFila[k]]!=1)	
+					{
+						a=false;
+					}else
+					{
+						testigo=testigo+1;
+					}
+				}
+			} 	if (testigo==5) {a=true;}
+		return a;}
+	public boolean comprobarBingo(int carton){
+		orden=0;
+		boolean a=true;
+		mu=new modeloCorredores();
+		numeros=mu.getNumeros(carton);
+		secuenciaNumeros=numeros.split(",");
+		for (int i=0; i<secuenciaNumeros.length; i++){
+			if (Integer.parseInt(secuenciaNumeros[i])!=0){
+				numerosSinCero[orden]=secuenciaNumeros[i];
+				orden=orden+1;
+			}	
+			}
+		for (int j=0;j<numerosSinCero.length;j++){
+			numerosCarton[j]=Integer.parseInt(numerosSinCero[(j)]);
+			if (numero[numerosCarton[j]]!=1){
+				a=false;
+			}
+		}
+		return a;
+	}
 	}
 
 
