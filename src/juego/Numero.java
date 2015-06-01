@@ -33,9 +33,9 @@ public void alternador(String color, int pos){
 	
 	if (color=="amarillo")
 	{				
-	setIcon(new ImageIcon(Ventana.class.getResource("/numerosCarton/"+pos+".PNG")));
+	setIcon(new ImageIcon(Numero.class.getResource("/numerosCarton/"+pos+".PNG")));
 	setColor();
-	}else{setIcon(new ImageIcon(Ventana.class.getResource("/numerosCartonAmarillo/"+pos+".PNG")));
+	}else{setIcon(new ImageIcon(Numero.class.getResource("/numerosCartonAmarillo/"+pos+".PNG")));
 	setColor();
 	}  
 
