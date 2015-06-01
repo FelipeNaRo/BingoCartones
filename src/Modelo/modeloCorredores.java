@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class modeloCorredores {
-	//DEVOLVER CORREDORES
+	//Selecciones a realizar.
 	private static String USUARIO_SEL="SELECT * FROM Jugadores";
 	private static String USUARIO_COL="nombre";
 	private static String CARTON_NUM="SELECT NUMEROS FROM CARTONES WHERE NUM_CARTON =";
@@ -36,7 +36,7 @@ public class modeloCorredores {
 	}
 	
 	
-	
+	// Coge la lista de usuarios de la BD,
 	public ArrayList<String> getusuarios(){
 		try{
 			instruccion = this.conexion.createStatement();
@@ -68,6 +68,7 @@ public class modeloCorredores {
 		}
 	}
 	
+	// Coge los numeros que conforman el cartón, cero para espacios
 	public String getNumeros(int carton){
 		try{ 
 			instruccion = this.conexion.createStatement();
@@ -95,7 +96,8 @@ public class modeloCorredores {
 			}
 		}
 	}
-
+	
+	// Coge el numero del cartón que ha de ser el primero en repartirse.
 	public int getNumeroCarton(){
 		try{ 
 			instruccion = this.conexion.createStatement();
@@ -123,7 +125,8 @@ public class modeloCorredores {
 			}
 		}
 	}
-
+	
+	// Guearda el numero del cartón que será el primero de la siguiente partida.
 	public void setNumeroCarton(int numero){
 		try{ 
 			instruccion = this.conexion.createStatement();

@@ -2,30 +2,19 @@ package juego;
 
 import javax.swing.JPanel;
 
-import Modelo.modeloCorredores;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.CardLayout;
-import javax.swing.JButton;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 
 
 public class Cartones extends JPanel{
 	
-	private Carton cartones[]=new Carton [4];
-	private int numeroCarton;
-	private String numerosCartones="";
-	private String numerosCarton[]=new String [27];
-	private modeloCorredores numeracion;
+	
+	private static final long serialVersionUID = 1L;
+	
 	
 	
 	public Cartones(int numeroCartones) {
+		
+		// Crea la base donde van los cartones.
 		setBounds(10,10,300,450);
 		setLayout(new MigLayout("", "[210.00px]", "[18px][18px]"));
 		
@@ -54,7 +43,5 @@ public class Cartones extends JPanel{
 			}
 	
 		}
-	public String getNumerosCarton(int i){
-		return this.numerosCarton[i];
-	}
+	
 }

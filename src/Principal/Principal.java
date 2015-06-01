@@ -1,29 +1,33 @@
 package Principal;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import java.awt.Color;
+
+import Modelo.modeloCorredores;
+
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.border.EmptyBorder;
 
-import Modelo.modeloCorredores;
-import juego.Carton;
 import juego.Cartones;
 
 
 
 public class Principal extends JFrame {
 
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel pantalla;
     private JLabel marcador[]=new JLabel[91];
     private JLabel SacaBolas=new JLabel(); 
@@ -38,16 +42,21 @@ public class Principal extends JFrame {
 	private int[] segundaFila=new int[5];
 	private int[] terceraFila=new int[5];
     private String numeros;
+    private String cart="";
     private String[] secuenciaNumeros;
     private String numerosSinCero[]=new String [15];
-    private Carton prueba;
+   
     private modeloCorredores mu;
-    
-    public Principal(){}
 
-	public Principal(int numeroJugadores, ArrayList nombreJugadores) {
+
+
+
+
+	public Principal(int numeroJugadores, ArrayList<String> nombreJugadores) {
 		setResizable(false);
+
 		setEnabled(true);
+
 
 		setIconImage(new ImageIcon(getClass().getResource("../Principal/icono.png")).getImage());
 		
@@ -61,7 +70,8 @@ public class Principal extends JFrame {
 
 		setTitle("Bingo twist");
 		
-		// Añade marcador de bolas salidas
+		// Añade marcador de numeros que han salido
+		
 		for (int i=0;i<=8;i++){
 			for (int j=0;j<=9;j++){
 				cont=cont+1;
@@ -69,25 +79,26 @@ public class Principal extends JFrame {
 		marcador[cont].setIcon(new ImageIcon((getClass().getResource("/Principal/imagenes/Botones Rojos/"+cont+".png"))));
 		marcador[cont].setBounds(10+j*60, 10+i*45, 38, 38);
 		pantalla.add(marcador[cont]);
-		
-		numero[cont]=0;
 		SacaBolas=new JLabel();
-		SacaBolas.setBounds(40,450, 100, 100);
+		SacaBolas.setBounds(140,450, 100, 100);
 		}}
 		
 		
-		JButton Salir = new JButton("Salir");
+		JButton Salir = new JButton("Exit");
+		Salir.setBackground(Color.ORANGE);
 		Salir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {						
 				Principal.this.dispose();						
 			}
 		});	
 		
-		Salir.setBounds(748, 521, 126, 29);
+		Salir.setBounds(470, 494, 126, 56);
 		pantalla.add(Salir);
 		
-
-		JButton PartidaNueva = new JButton("Partida Nueva");
+		// Inicia una nueva partida. 
+		
+		JButton PartidaNueva = new JButton("New Game");
+		PartidaNueva.setBackground(Color.CYAN);
 		PartidaNueva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal VentPrinc = new Principal(numeroJugadores, nombreJugadores);
@@ -96,10 +107,13 @@ public class Principal extends JFrame {
 				reiniciar();			
 			}
 		});
-		PartidaNueva.setBounds(748, 480, 126, 30);
+		PartidaNueva.setBounds(470, 424, 126, 56);
 		pantalla.add(PartidaNueva);
-		prueba=new Carton();
-		JButton BolaNueva = new JButton("Bola Nueva");
+		
+		// Saca una nueva bola.
+		JButton BolaNueva = new JButton("New Ball");
+		BolaNueva.setForeground(Color.WHITE);
+		BolaNueva.setBackground(Color.MAGENTA);
 		BolaNueva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {		
 				SacaBolas.setVisible(true);
@@ -126,23 +140,25 @@ public class Principal extends JFrame {
 		
 		
 		
-		BolaNueva.setBounds(629, 480, 109, 70);
+		BolaNueva.setBounds(351, 424, 109, 126);
 		pantalla.add(BolaNueva);
 		
 		JButton Linea = new JButton("");
 		Linea.setIcon(new ImageIcon(getClass().getResource("/Principal/imagenes/btnLinea.png")));
 		
 		Linea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
-				int a=Integer.parseInt(JOptionPane.showInputDialog("numero de cartón: "));
-				prueba=new Carton();
+			public void actionPerformed(ActionEvent arg0) {
+			
+				cart=JOptionPane.showInputDialog("card's number: ");
+				
+				int a=Integer.parseInt(cart);
 				if(comprobarLinea(a)==true){
-				JOptionPane.showMessageDialog(null, "Han cantado Linea!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
-				}else{JOptionPane.showMessageDialog(null, "Linea Incorrecta", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
+				JOptionPane.showMessageDialog(null, "Correct Line!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));
+				}else{JOptionPane.showMessageDialog(null, "Incorrect Line", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
 }
 				}
 		});	
-		Linea.setBounds(629, 11, 109, 50);
+		Linea.setBounds(606, 11, 109, 50);
 		pantalla.add(Linea);
 		
 		JButton Bingo = new JButton("");
@@ -152,8 +168,9 @@ public class Principal extends JFrame {
 				setBounds(200, 90, 900, 600);
 				int a=Integer.parseInt(JOptionPane.showInputDialog("numero de cartón: "));
 				if(comprobarBingo(a)==true){
-					JOptionPane.showMessageDialog(null, "Han cantado Bingo!!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
-					}else{JOptionPane.showMessageDialog(null, "Bingo Incorrecto", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
+					JOptionPane.showMessageDialog(null, "¡¡¡¡¡ Bingo !!!!!", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));
+					JOptionPane.showMessageDialog(null, "Any More Bingo?...", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));
+					}else{JOptionPane.showMessageDialog(null, "Bingo Incorrect", "Bingo Twist", JOptionPane.WARNING_MESSAGE, new ImageIcon("src/Principal/imagenes/iconoJOption.jpg"));			
 	}
 				setBounds(200, 90, 900, 600);
 			}
@@ -164,10 +181,13 @@ public class Principal extends JFrame {
 		JTabbedPane panelPestaña = new JTabbedPane(JTabbedPane.TOP);
 
 		panelPestaña.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		panelPestaña.setBounds(629, 72, 300, 393);
-		panelPestaña.setBounds(606, 75, 300, 393);
+
+		panelPestaña.setBounds(606, 75, 270, 475);
+		panelPestaña.setBounds(606, 75, 268, 475);
 		
-		
+		//panelPestaña.setLayout(new BoxLayout(panelPestaña, BoxLayout.Y_AXIS));
+		pantalla.add(panelPestaña);
+
 		
 		
 		for (int i=0;i<numeroJugadores;i++){
@@ -180,7 +200,6 @@ public class Principal extends JFrame {
 		panelPestaña.addTab((String)nombreJugadores.get(i), null, panel[i], null);
 		pantalla.add(panelPestaña);
 		}
-		
 	}
 	public void reiniciar(){
 		for (int i=1;i<91;i++){numero[i]=0;
@@ -203,8 +222,7 @@ public class Principal extends JFrame {
 		SacaBolas.setVisible(false);
 		pantalla.repaint();
 	}
-	
-	public String[] getNombres( ArrayList nombreJugadores){
+	public String[] getNombres( ArrayList<String> nombreJugadores){
 		String[] nombres = new String[nombreJugadores.size()];
 		nombres=(String[]) nombreJugadores.toArray();
 		return nombres;
@@ -293,6 +311,6 @@ public class Principal extends JFrame {
 		}
 		return a;
 	}
-	}
 
+	}
 
